@@ -85,7 +85,7 @@ Item {
         LinkLabel {
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
-            text: i18n("<b>Ubuntu Security Notices:</b> <a href=\"https://usn.ubuntu.com/usn/xenial/\">Xenial 16.04 LTS</a>")
+            text: i18n("<b>Ubuntu Security Notices:</b> <a href=\"https://usn.ubuntu.com/releases/ubuntu-16.04-lts/\">Xenial 16.04 LTS</a>")
         }
         LinkLabel {
             Layout.fillWidth: true
