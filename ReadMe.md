@@ -7,3 +7,10 @@ This is a fork of Discover's (formerly known as Muon) notifier plasmoid which yo
 ![](https://i.imgur.com/2veXxyw.png)
 
 ![](https://i.imgur.com/sq2rA7L.png)
+
+## Development Note
+
+In order for the konsole to open the upgrade scripts correctly, they need to be executable. The `./build` script uses:
+
+	chmod +x package/contents/scripts/updatepackages
+	chmod +x package/contents/scripts/upgradepackages
