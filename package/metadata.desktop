@@ -1,7 +1,6 @@
 [Desktop Entry]
 Name=Updates (Terminal)
 Comment=Helps you keep your system up to date
-Encoding=UTF-8
 
 Icon=update-none
 Type=Service
