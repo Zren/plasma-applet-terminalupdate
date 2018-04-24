@@ -22,6 +22,8 @@ import org.kde.plasma.plasmoid 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.discovernotifier 1.0
 
+import "lib"
+
 Item {
     id: root
 
@@ -40,14 +42,23 @@ Item {
     }
 
 
-    PlasmaCore.DataSource {
-        id: executeSource
-        engine: "executable"
-        connectedSources: []
-        onNewData: disconnectSource(sourceName)
+    ExecUtil {
+        id: executable
     }
     function exec(cmd) {
         executeSource.connectSource(cmd)
+    }
+
+    QtObject {
+        id: distro
+        property string releaseCodename: ''
+
+        function update() {
+            executable.exec('lsb_release -cs', function(cmd, exitCode, exitStatus, stdout, stderr) {
+                distro.releaseCodename = stdout.trim()
+                console.log('releaseCodename', distro.releaseCodename)
+            })
+        }
     }
 
     Component.onCompleted: {
@@ -61,15 +72,15 @@ Item {
     function execScript(scriptRelativePath) {
         var scriptPath = plasmoid.file("", scriptRelativePath)
         var command = "konsole --hide-menubar --hide-tabbar --hold -e \'" + scriptPath + "\'"
-        exec(command)
+        executable.exec(command)
     }
 
     function action_openAptHistoryLog() {
-        exec("xdg-open /var/log/apt/history.log")
+        executable.exec("xdg-open /var/log/apt/history.log")
     }
 
     // function action_openAptTermLog() {
-    //     exec("xdg-open /var/log/apt/term.log")
+    //     executable.exec("xdg-open /var/log/apt/term.log")
     // }
 
     function action_update() {

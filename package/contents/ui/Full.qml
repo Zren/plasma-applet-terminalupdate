@@ -85,7 +85,25 @@ Item {
         LinkLabel {
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
-            text: i18n("<b>Ubuntu Security Notices:</b> <a href=\"https://usn.ubuntu.com/releases/ubuntu-16.04-lts/\">Xenial 16.04 LTS</a>")
+            text: {
+                var name = distro.releaseCodename
+                var usnId = 'ubuntu-18.04-lts'
+                var label = ''
+
+                if (name == 'xenial') { usnId = 'ubuntu-16.04-lts'; label = i18n("Xenial 16.04 LTS");
+                } else if (name == 'yakkety') { usnId = 'ubuntu-16.10'; label = i18n("Yakkety 16.10");
+                } else if (name == 'zesty') { usnId = 'ubuntu-17.04'; label = i18n("Zesty 17.04");
+                } else if (name == 'artful') { usnId = 'ubuntu-17.10'; label = i18n("Artful 17.10");
+                } else if (name == 'bionic') { usnId = 'ubuntu-18.04-lts'; label = i18n("Bionic 18.04 LTS");
+                } else {
+                    return ''
+                }
+
+                return i18n("<b>Ubuntu Security Notices:</b> <a href=\"https://usn.ubuntu.com/releases/%1/\">%2</a>", usnId, label)
+            }
+            visible: text
+
+            Component.onCompleted: distro.update()
         }
         LinkLabel {
             Layout.fillWidth: true
