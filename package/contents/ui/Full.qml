@@ -94,12 +94,12 @@ Item {
                 { version: '18.04', name: 'bionic', lts: true },
                 { version: '18.10', name: 'cosmic', lts: false },
                 { version: '19.04', name: 'disco', lts: false },
-                { version: '19.10', name: 'eeeee', lts: false },
-                { version: '20.04', name: 'fffff', lts: true },
-                { version: '20.10', name: 'ggggg', lts: false },
-                { version: '21.04', name: 'hhhhh', lts: false },
-                { version: '21.10', name: 'iiiii', lts: false },
-                { version: '22.04', name: 'jjjjj', lts: true },
+                { version: '19.10', name: '', lts: false },
+                { version: '20.04', name: '', lts: true },
+                { version: '20.10', name: '', lts: false },
+                { version: '21.04', name: '', lts: false },
+                { version: '21.10', name: '', lts: false },
+                { version: '22.04', name: '', lts: true },
             ]
 
             function getUbuntuRelease(version) {
@@ -117,8 +117,18 @@ Item {
                 return str.replace(/\b\w/g, function(l){ return l.toUpperCase() })
             }
 
+            function getLabelForRelease(ubuntuRelease) {
+                var label = ''
+                if (ubuntuRelease.name) {
+                    label += capitalize(ubuntuRelease.name) + ' '
+                }
+                label += ubuntuRelease.version + (ubuntuRelease.lts ? ' LTS' : '')
+                return label
+            }
+
             text: {
                 // var ubuntuRelease = getUbuntuRelease('16.10')
+                // var ubuntuRelease = getUbuntuRelease('20.04')
                 var ubuntuRelease = getUbuntuRelease(distro.release)
                 if (!ubuntuRelease) {
                     return ''
@@ -128,7 +138,7 @@ Item {
                 var usnId = 'ubuntu-' + ubuntuRelease.version + (ubuntuRelease.lts ? '-lts' : '')
 
                 // Xenial 16.04 LTS / Yakkety 16.10
-                var label = capitalize(ubuntuRelease.name) + ' ' + ubuntuRelease.version + (ubuntuRelease.lts ? ' LTS' : '')
+                var label = getLabelForRelease(ubuntuRelease)
 
                 return i18n("<b>Ubuntu Security Notices:</b> <a href=\"https://usn.ubuntu.com/releases/%1/\">%2</a>", usnId, label)
             }
