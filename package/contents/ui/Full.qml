@@ -95,6 +95,10 @@ Item {
                 } else if (name == 'zesty') { usnId = 'ubuntu-17.04'; label = i18n("Zesty 17.04");
                 } else if (name == 'artful') { usnId = 'ubuntu-17.10'; label = i18n("Artful 17.10");
                 } else if (name == 'bionic') { usnId = 'ubuntu-18.04-lts'; label = i18n("Bionic 18.04 LTS");
+                } else if (name == 'cosmic') { usnId = 'ubuntu-18.10'; label = i18n("Cosmic 18.10");
+                } else if (name == 'disco') { usnId = 'ubuntu-19.04'; label = i18n("Disco 19.04");
+                } else if (name == 'e____') { usnId = 'ubuntu-19.10'; label = i18n("E____ 19.10");
+                } else if (name == 'f____') { usnId = 'ubuntu-20.04-lts'; label = i18n("F____ 20.04 LTS");
                 } else {
                     return ''
                 }
