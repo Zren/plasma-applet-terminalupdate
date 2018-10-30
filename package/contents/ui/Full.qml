@@ -85,23 +85,50 @@ Item {
         LinkLabel {
             Layout.fillWidth: true
             wrapMode: Text.WordWrap
-            text: {
-                var name = distro.releaseCodename
-                var usnId = 'ubuntu-18.04-lts'
-                var label = ''
 
-                if (name == 'xenial') { usnId = 'ubuntu-16.04-lts'; label = i18n("Xenial 16.04 LTS");
-                } else if (name == 'yakkety') { usnId = 'ubuntu-16.10'; label = i18n("Yakkety 16.10");
-                } else if (name == 'zesty') { usnId = 'ubuntu-17.04'; label = i18n("Zesty 17.04");
-                } else if (name == 'artful') { usnId = 'ubuntu-17.10'; label = i18n("Artful 17.10");
-                } else if (name == 'bionic') { usnId = 'ubuntu-18.04-lts'; label = i18n("Bionic 18.04 LTS");
-                } else if (name == 'cosmic') { usnId = 'ubuntu-18.10'; label = i18n("Cosmic 18.10");
-                } else if (name == 'disco') { usnId = 'ubuntu-19.04'; label = i18n("Disco 19.04");
-                } else if (name == 'e____') { usnId = 'ubuntu-19.10'; label = i18n("E____ 19.10");
-                } else if (name == 'f____') { usnId = 'ubuntu-20.04-lts'; label = i18n("F____ 20.04 LTS");
-                } else {
+            property var ubuntuReleases: [
+                { version: '16.04', name: 'xenial', lts: true },
+                { version: '16.10', name: 'yakkety', lts: false },
+                { version: '17.04', name: 'zesty', lts: false },
+                { version: '17.10', name: 'artful', lts: false },
+                { version: '18.04', name: 'bionic', lts: true },
+                { version: '18.10', name: 'cosmic', lts: false },
+                { version: '19.04', name: 'disco', lts: false },
+                { version: '19.10', name: 'eeeee', lts: false },
+                { version: '20.04', name: 'fffff', lts: true },
+                { version: '20.10', name: 'ggggg', lts: false },
+                { version: '21.04', name: 'hhhhh', lts: false },
+                { version: '21.10', name: 'iiiii', lts: false },
+                { version: '22.04', name: 'jjjjj', lts: true },
+            ]
+
+            function getUbuntuRelease(version) {
+                for (var i = 0; i < ubuntuReleases.length; i++) {
+                    var ubuntuRelease = ubuntuReleases[i]
+                    if (ubuntuRelease.version == version) {
+                        return ubuntuRelease
+                    }
+                }
+                return null
+            }
+
+            // https://stackoverflow.com/questions/2332811/capitalize-words-in-string
+            function capitalize(str) {
+                return str.replace(/\b\w/g, function(l){ return l.toUpperCase() })
+            }
+
+            text: {
+                // var ubuntuRelease = getUbuntuRelease('16.10')
+                var ubuntuRelease = getUbuntuRelease(distro.release)
+                if (!ubuntuRelease) {
                     return ''
                 }
+
+                // ubuntu-16.04-lts / ubuntu-16.10
+                var usnId = 'ubuntu-' + ubuntuRelease.version + (ubuntuRelease.lts ? '-lts' : '')
+
+                // Xenial 16.04 LTS / Yakkety 16.10
+                var label = capitalize(ubuntuRelease.name) + ' ' + ubuntuRelease.version + (ubuntuRelease.lts ? ' LTS' : '')
 
                 return i18n("<b>Ubuntu Security Notices:</b> <a href=\"https://usn.ubuntu.com/releases/%1/\">%2</a>", usnId, label)
             }

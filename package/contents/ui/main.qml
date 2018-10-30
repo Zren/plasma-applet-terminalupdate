@@ -51,12 +51,17 @@ Item {
 
     QtObject {
         id: distro
+        property string release: ''
         property string releaseCodename: ''
 
         function update() {
+            executable.exec('lsb_release -rs', function(cmd, exitCode, exitStatus, stdout, stderr) {
+                distro.release = stdout.trim()
+                // console.log('release', distro.release)
+            })
             executable.exec('lsb_release -cs', function(cmd, exitCode, exitStatus, stdout, stderr) {
                 distro.releaseCodename = stdout.trim()
-                console.log('releaseCodename', distro.releaseCodename)
+                // console.log('releaseCodename', distro.releaseCodename)
             })
         }
     }
